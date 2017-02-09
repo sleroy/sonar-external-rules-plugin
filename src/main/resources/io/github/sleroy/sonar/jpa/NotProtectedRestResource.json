@@ -1,0 +1,13 @@
+{
+  "title": "Rest resource has not been protected",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "5min"
+  },
+  "tags": [
+    "vulnerability",
+    "pitfall"
+  ],
+  "defaultSeverity": "Blocker"
+}
