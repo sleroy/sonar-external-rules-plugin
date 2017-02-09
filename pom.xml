@@ -70,6 +70,13 @@
 			</exclusions>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.8</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.sonarsource.java</groupId>
 			<artifactId>java-checks-testkit</artifactId>
@@ -125,9 +132,9 @@
 				<version>1.17</version>
 				<extensions>true</extensions>
 				<configuration>
-					<pluginKey>java-custom</pluginKey>
-					<pluginName>Java Custom Rules</pluginName>
-					<pluginClass>org.sonar.samples.java.MyJavaRulesPlugin</pluginClass>
+					<pluginKey>sonar-extension-rules</pluginKey>
+					<pluginName>Sonar Extension Rules</pluginName>
+					<pluginClass>io.github.sleroy.sonar.jpa.JpaRulesPlugin</pluginClass>
 					<sonarLintSupported>true</sonarLintSupported>
 					<sonarQubeMinVersion>5.6</sonarQubeMinVersion> <!-- allow to depend on API 6.x but run on LTS -->
 				</configuration>

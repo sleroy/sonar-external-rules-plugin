@@ -17,26 +17,23 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package io.github.sleroy.sonar.jpa;
+package io.github.sleroy.sonar.jpa.checks;
 
-import org.sonar.api.Plugin;
+import org.junit.Test;
+import org.sonar.java.checks.verifier.JavaCheckVerifier;
 
-/**
- * Entry point of your plugin containing your custom rules
- */
-public class JpaRulesPlugin implements Plugin {
+public class LearningRuleTest {
 
-    @Override
-    public void define(Context context) {
+  @Test
+  public void detected() {
 
-        // server extensions -> objects are instantiated during server startup
-        context.addExtension(JpaRulesDefinition.class);
-
-        // batch extensions -> objects are instantiated during code analysis
-        context.addExtension(JpaRulesCheckRegistrar.class);
-        context.addExtension(PathResolverImpl.class);
+    // Use an instance of the check under test to raise the issue.
+    LearningRule check = new LearningRule();
 
 
-    }
-
+    // Verifies that the check will raise the adequate issues with the expected message.
+    // In the test file, lines which should raise an issue have been commented out
+    // by using the following syntax: "// Noncompliant {{EXPECTED_MESSAGE}}"
+    JavaCheckVerifier.verify("src/test/files/LearningRule.java", check);
+  }
 }

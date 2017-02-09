@@ -22,6 +22,7 @@ package io.github.sleroy.sonar.jpa;
 import java.util.Arrays;
 
 import io.github.sleroy.sonar.jpa.checks.AvoidUnmodifiableListRule;
+import io.github.sleroy.sonar.jpa.checks.LearningRule;
 import io.github.sleroy.sonar.jpa.checks.NotProtectedRestResourceRule;
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
@@ -38,22 +39,13 @@ import org.sonarsource.api.sonarlint.SonarLintSide;
 public class JpaRulesCheckRegistrar implements CheckRegistrar {
 
     /**
-     * Register the classes that will be used to instantiate checks during
-     * analysis.
-     */
-    @Override
-    public void register(RegistrarContext registrarContext) {
-        // Call to registerClassesForRepository to associate the classes with the correct repository key
-        registrarContext.registerClassesForRepository(JpaRulesDefinition.REPOSITORY_KEY, Arrays.asList(checkClasses()), Arrays.asList(testCheckClasses()));
-    }
-
-    /**
      * Lists all the checks provided by the plugin
      */
     public static Class<? extends JavaCheck>[] checkClasses() {
         return new Class[]{
-            AvoidUnmodifiableListRule.class,
-            NotProtectedRestResourceRule.class
+                AvoidUnmodifiableListRule.class,
+                NotProtectedRestResourceRule.class,
+                LearningRule.class
         };
     }
 
@@ -62,5 +54,15 @@ public class JpaRulesCheckRegistrar implements CheckRegistrar {
      */
     public static Class<? extends JavaCheck>[] testCheckClasses() {
         return new Class[]{};
+    }
+
+    /**
+     * Register the classes that will be used to instantiate checks during
+     * analysis.
+     */
+    @Override
+    public void register(RegistrarContext registrarContext) {
+        // Call to registerClassesForRepository to associate the classes with the correct repository key
+        registrarContext.registerClassesForRepository(JpaRulesDefinition.REPOSITORY_KEY, Arrays.asList(checkClasses()), Arrays.asList(testCheckClasses()));
     }
 }
