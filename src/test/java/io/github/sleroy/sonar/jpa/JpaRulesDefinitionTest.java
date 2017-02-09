@@ -39,7 +39,7 @@ public class JpaRulesDefinitionTest {
     rulesDefinition.define(context);
     RulesDefinition.Repository repository = context.repository(JpaRulesDefinition.REPOSITORY_KEY);
 
-    assertThat(repository.name()).isEqualTo("MyCompany Custom Repository");
+    assertThat(repository.name()).isEqualTo("Sonar Extension Rules");
     assertThat(repository.language()).isEqualTo("java");
     assertThat(repository.rules()).hasSize(RulesList.getChecks().size());
 
@@ -50,17 +50,17 @@ public class JpaRulesDefinitionTest {
 
   private void assertParameterProperties(Repository repository) {
     // TooManyLinesInFunctionCheck
-    Param max = repository.rule("AvoidAnnotation").param("name");
+    Param max = repository.rule("NotProtectedRestResource").param("restAnnotations");
     assertThat(max).isNotNull();
-    assertThat(max.defaultValue()).isEqualTo("Inject");
-    assertThat(max.description()).isEqualTo("Name of the annotation to avoid, without the prefix @, for instance 'Override'");
+    assertThat(max.defaultValue()).isEqualTo("RequestMapping, Get, Put, Post, Delete");
+    assertThat(max.description()).isEqualTo("Annotations indicating rest resources");
     assertThat(max.type()).isEqualTo(RuleParamType.STRING);
   }
 
   private void assertRuleProperties(Repository repository) {
-    Rule rule = repository.rule("AvoidAnnotation");
+    Rule rule = repository.rule("NotProtectedRestResource");
     assertThat(rule).isNotNull();
-    assertThat(rule.name()).isEqualTo("Title of AvoidAnnotation");
+    assertThat(rule.name()).isEqualTo("Rest resource has not been protected with appropriate role");
     assertThat(rule.debtRemediationFunction().type()).isEqualTo(Type.CONSTANT_ISSUE);
     assertThat(rule.type()).isEqualTo(RuleType.BUG);
   }

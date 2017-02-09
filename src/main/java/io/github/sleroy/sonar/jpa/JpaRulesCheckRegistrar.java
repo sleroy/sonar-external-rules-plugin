@@ -21,7 +21,6 @@ package io.github.sleroy.sonar.jpa;
 
 import java.util.Arrays;
 
-import io.github.sleroy.sonar.jpa.checks.AvoidAnnotationRule;
 import io.github.sleroy.sonar.jpa.checks.AvoidUnmodifiableListRule;
 import io.github.sleroy.sonar.jpa.checks.NotProtectedRestResourceRule;
 import org.sonar.plugins.java.api.CheckRegistrar;
@@ -29,16 +28,18 @@ import org.sonar.plugins.java.api.JavaCheck;
 import org.sonarsource.api.sonarlint.SonarLintSide;
 
 /**
- * Provide the "checks" (implementations of rules) classes that are gonna be executed during
- * source code analysis.
+ * Provide the "checks" (implementations of rules) classes that are gonna be
+ * executed during source code analysis.
  * <p>
- * This class is a batch extension by implementing the {@link org.sonar.plugins.java.api.CheckRegistrar} interface.
+ * This class is a batch extension by implementing the
+ * {@link org.sonar.plugins.java.api.CheckRegistrar} interface.
  */
 @SonarLintSide
 public class JpaRulesCheckRegistrar implements CheckRegistrar {
 
     /**
-     * Register the classes that will be used to instantiate checks during analysis.
+     * Register the classes that will be used to instantiate checks during
+     * analysis.
      */
     @Override
     public void register(RegistrarContext registrarContext) {
@@ -51,9 +52,8 @@ public class JpaRulesCheckRegistrar implements CheckRegistrar {
      */
     public static Class<? extends JavaCheck>[] checkClasses() {
         return new Class[]{
-                AvoidAnnotationRule.class,
-                AvoidUnmodifiableListRule.class,
-                NotProtectedRestResourceRule.class
+            AvoidUnmodifiableListRule.class,
+            NotProtectedRestResourceRule.class
         };
     }
 

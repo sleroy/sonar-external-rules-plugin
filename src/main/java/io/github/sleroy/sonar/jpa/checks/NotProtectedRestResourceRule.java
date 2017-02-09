@@ -31,7 +31,7 @@ import org.sonar.plugins.java.api.tree.Tree;
 
 import java.util.List;
 
-@Rule(key = "NotProtectedRestResourceRule")
+@Rule(key = "NotProtectedRestResource")
 public class NotProtectedRestResourceRule extends BaseTreeVisitor implements JavaFileScanner {
 
     private static final String DEFAULT_VALUE = "RequestMapping, Get, Put, Post, Delete";
@@ -39,8 +39,8 @@ public class NotProtectedRestResourceRule extends BaseTreeVisitor implements Jav
     private JavaFileScannerContext context;
 
     /**
-     * Name of the annotation to avoid. Value can be set by users in Quality profiles.
-     * The key
+     * Name of the annotation to avoid. Value can be set by users in Quality
+     * profiles. The key
      */
     @RuleProperty(
             defaultValue = DEFAULT_VALUE,
@@ -51,25 +51,19 @@ public class NotProtectedRestResourceRule extends BaseTreeVisitor implements Jav
     @Override
     public void scanFile(JavaFileScannerContext context) {
         this.context = context;
-
-        scan(context.getTree());
-
         matcher = new StringMatcher(restAnnotations);
-
+        scan(context.getTree());
 
     }
 
     @Override
     public void visitMethod(MethodTree tree) {
-        List<AnnotationTree> annotations = tree.modifiers().annotations();
-        for (AnnotationTree annotationTree : annotations) {
-            if (annotationTree.annotationType().is(Tree.Kind.IDENTIFIER)) {
-                IdentifierTree idf = (IdentifierTree) annotationTree.annotationType();
-                System.out.println(idf.name());
 
-                if (matcher.matches(idf.name())) {
-                    context.reportIssue(this, idf, String.format("Avoid using annotation @%s", idf.name()));
-                }
+        if (ASTUtils.hasMethodAnnotation(tree, "RequestMapping")) {
+            if (!ASTUtils.hasMethodAnnotation(tree, "Secured")) {
+                final String message = String.format("Unsecured Request Mapping, the request mapping should be associated with a @Secured annotation.");
+                System.out.println(message);
+                context.reportIssue(this, tree, message);
             }
         }
 

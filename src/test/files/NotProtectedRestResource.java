@@ -36,7 +36,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  */
 @RestController
 @RequestMapping("/api")
-public class FormReportResource extends GHIReportResource {
+public class FormReportResource {
 
     private final Logger log = LoggerFactory.getLogger(FormReportResource.class);
 
@@ -46,64 +46,71 @@ public class FormReportResource extends GHIReportResource {
     @Inject
     private FormReportService formReportService;
 
-    @RequestMapping(value = "/form-reports",
+    
+    @RequestMapping(value = "/form-reports", // Noncompliant {{Unsecured Request Mapping, the request mapping should be associated with a @Secured annotation.}}
             method = RequestMethod.POST,
-            produces = APPLICATION_JSON_VALUE)
+            produces = APPLICATION_JSON_VALUE) 
     @Timed
     public ResponseEntity<FormReportDTO> createFormReport(@Valid @RequestBody FormReportDTO formReportDTO) throws URISyntaxException {
 
     }
 
-    @RequestMapping(value = "/form-reports",
+    
+    @RequestMapping(value = "/form-reports", // Noncompliant {{Unsecured Request Mapping, the request mapping should be associated with a @Secured annotation.}}
             method = RequestMethod.PUT,
-            produces = APPLICATION_JSON_VALUE)
+            produces = APPLICATION_JSON_VALUE) 
     @Timed
     public ResponseEntity<FormReportDTO> updateFormReport(@Valid @RequestBody FormReportDTO formReportDTO) throws URISyntaxException {
 
     }
 
-    @RequestMapping(value = "/form-reports",
+    
+    @RequestMapping(value = "/form-reports",// Noncompliant {{Unsecured Request Mapping, the request mapping should be associated with a @Secured annotation.}}
             method = RequestMethod.GET,
-            produces = APPLICATION_JSON_VALUE)
+            produces = APPLICATION_JSON_VALUE) 
     @Timed
     public List<FormReportDTO> getAllFormReports(@ModelAttribute(value = "criteria") FormReportCriteria formReportCriteria) {
         return null;
     }
 
-    @RequestMapping(value = "/form-reports/{id}",
+    
+    @RequestMapping(value = "/form-reports/{id}", // Noncompliant {{Unsecured Request Mapping, the request mapping should be associated with a @Secured annotation.}}
             method = RequestMethod.GET,
-            produces = APPLICATION_JSON_VALUE)
+            produces = APPLICATION_JSON_VALUE) 
     @Timed
     public ResponseEntity<FormReportDTO> getFormReport(@PathVariable Long id) {
         return null;
     }
 
-    @RequestMapping(value = "/form-reports/{id}.pdf",
+    
+    @RequestMapping(value = "/form-reports/{id}.pdf",// Noncompliant {{Unsecured Request Mapping, the request mapping should be associated with a @Secured annotation.}}
             method = RequestMethod.GET,
-            produces = "application/pdf")
+            produces = "application/pdf") 
     @Timed
     public void getFormReportFile(@PathVariable Long id, HttpServletResponse httpServletResponse) throws IOException, GHIException {
     }
 
-    @RequestMapping(value = "/form-reports/{id}",
+    
+    @RequestMapping(value = "/form-reports/{id}", // Noncompliant {{Unsecured Request Mapping, the request mapping should be associated with a @Secured annotation.}}
             method = RequestMethod.DELETE,
-            produces = APPLICATION_JSON_VALUE)
+            produces = APPLICATION_JSON_VALUE) 
     @Timed
     public ResponseEntity<Void> deleteFormReport(@PathVariable Long id) {
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("formReport", id.toString())).build();
+        return null;
     }
 
 
-    @RequestMapping(value = "/users",
+    
+    @RequestMapping(value = "/users", 
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE) 
     @Timed
     @Transactional(readOnly = true)
     @Secured(AuthoritiesConstants.ROLE_GHI_CS)
     public ResponseEntity<List<ManagedUserDTO>> getAllUsers(Pageable pageable, @ModelAttribute UserCriteria userCriteria)
             throws URISyntaxException {
 
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return null;
     }
 
 }

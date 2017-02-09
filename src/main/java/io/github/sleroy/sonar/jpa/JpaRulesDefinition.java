@@ -39,7 +39,7 @@ import java.util.Locale;
  */
 public class JpaRulesDefinition implements RulesDefinition {
 
-  public static final String REPOSITORY_KEY = "jpa-rules";
+  public static final String REPOSITORY_KEY = "extension-rules";
 
   private final Gson gson = new Gson();
 
@@ -47,7 +47,7 @@ public class JpaRulesDefinition implements RulesDefinition {
   public void define(Context context) {
     NewRepository repository = context
       .createRepository(REPOSITORY_KEY, Java.KEY)
-      .setName("MyCompany Custom Repository");
+      .setName("Sonar Extension Rules");
 
     new AnnotationBasedRulesDefinition(repository, Java.KEY)
       .addRuleClasses(/* don't fail if no SQALE annotations */ false, RulesList.getChecks());
@@ -66,7 +66,7 @@ public class JpaRulesDefinition implements RulesDefinition {
 
   @Nullable
   private static String readRuleDefinitionResource(String fileName) {
-    URL resource = JpaRulesDefinition.class.getResource("/org/sonar/l10n/java/rules/mycompany/" + fileName);
+    URL resource = JpaRulesDefinition.class.getResource("/io/github/sleroy/sonar/" + fileName);
     if (resource == null) {
       return null;
     }
